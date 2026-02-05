@@ -14,6 +14,9 @@ importers:
 
   apps/api:
     dependencies:
+      '@finance/shared-types':
+        specifier: workspace:*
+        version: link:../../packages/shared-types
       '@nestjs/common':
         specifier: ^11.1.13
         version: 11.1.13(reflect-metadata@0.2.2)(rxjs@7.8.2)
@@ -42,6 +45,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@finance/shared-types':
+        specifier: workspace:*
+        version: link:../../packages/shared-types
       '@tailwindcss/vite':
         specifier: ^4.1.18
         version: 4.1.18(vite@7.3.1(@types/node@24.10.11)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.46.0))
@@ -91,6 +97,8 @@ importers:
       vite:
         specifier: ^7.2.4
         version: 7.3.1(@types/node@24.10.11)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.46.0)
+
+  packages/shared-types: {}
 
 packages:
 
