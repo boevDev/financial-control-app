@@ -1,5 +1,6 @@
 {
-  "name": "@finance/shared-types",
-  "private": true,
-  "version": "0.0.1"
+	"name": "@finance/shared-types",
+	"version": "0.0.1",
+	"private": true,
+	"main": "src/index.ts"
 }
