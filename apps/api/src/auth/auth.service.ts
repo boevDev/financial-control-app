@@ -1,7 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { User } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class AuthService {
@@ -47,9 +48,14 @@ export class AuthService {
 	async refreshTokens(refreshToken: string) {
 		if (!refreshToken) throw new UnauthorizedException();
 
-		const users = await this.prisma.user.findMany();
+		// достаём всех пользователей с refreshToken (можно фильтровать, если пользователей много)
+		const users = await this.prisma.user.findMany({
+			where: { refreshToken: { not: null } },
+		});
 
-		let userFound = null;
+		// TS знает, что userFound будет User | null
+		let userFound: User | null = null;
+
 		for (const u of users) {
 			if (u.refreshToken && (await bcrypt.compare(refreshToken, u.refreshToken))) {
 				userFound = u;
