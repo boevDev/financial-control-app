@@ -1,12 +1,13 @@
-import { useThemeStore } from '../model/themeStore';
+import { useThemeStore, type Theme } from '../model/themeStore';
 
 export const ThemeSwitcher = () => {
-	const { theme, setTheme } = useThemeStore();
+	const theme = useThemeStore((s) => s.theme);
+	const setTheme = useThemeStore((s) => s.setTheme);
 
 	return (
 		<select
 			value={theme}
-			onChange={(e) => setTheme(e.target.value as 'light' | 'dark' | 'system')}
+			onChange={(e) => setTheme(e.target.value as Theme)}
 			className="p-2 border rounded"
 		>
 			<option value="light">Светлая</option>
