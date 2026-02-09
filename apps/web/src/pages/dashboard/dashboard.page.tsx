@@ -5,6 +5,10 @@ import { useEffect } from 'react';
 import type { AuthUser } from '@finance/shared-types';
 import { Outlet, useNavigate } from '@tanstack/react-router';
 import { usePageTitle } from '../../shared/hooks/usePageTitle';
+import { Button } from '@/shared/ui/button';
+import Header from '@/shared/ui/layout/header';
+import { ThemeSwitcher } from '@/features/theme';
+import { usePageTitleStore } from '@/shared/hooks/pageTitle.store';
 
 export function DashboardPage() {
 	usePageTitle('Панель управления');
@@ -12,6 +16,7 @@ export function DashboardPage() {
 	const setAccessToken = useAuthStore((state) => state.setAccessToken);
 	const logout = useAuthStore((state) => state.logout);
 	const navigate = useNavigate();
+	const { currentPageTitle } = usePageTitleStore();
 
 	const meQuery = useQuery<AuthUser, Error>({
 		queryKey: ['me'],
@@ -41,15 +46,18 @@ export function DashboardPage() {
 
 	return (
 		<div>
-			<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+			<Header>
 				<div>
-					<h1>Dashboard</h1>
-					<p>Welcome, {meQuery.data?.email}</p>
+					<h1>{currentPageTitle}</h1>
 				</div>
-				<button onClick={handleLogout} style={{ padding: '10px 20px' }}>
-					Выйти из аккаунта
-				</button>
-			</div>
+
+				<div className="flex gap-4">
+					<ThemeSwitcher />
+					<Button onClick={handleLogout} style={{ padding: '10px 20px' }}>
+						Выйти из аккаунта
+					</Button>
+				</div>
+			</Header>
 			<Outlet />
 		</div>
 	);

@@ -38,11 +38,13 @@ export const ThemeSwitcher: FC<ThemeSwitcherProps> = ({ className }) => {
 	const theme = useThemeStore((s) => s.theme);
 	const setTheme = useThemeStore((s) => s.setTheme);
 
+	const currentIcon = themes.find((t) => t.value === theme)?.icon;
+
 	return (
 		<div className={cn(className)}>
 			<Select value={theme} onValueChange={(value) => setTheme(value as Theme)}>
 				<SelectTrigger>
-					<SelectValue placeholder="Выбрать тему" />
+					<SelectValue placeholder="Выбрать тему">{currentIcon} Выбрать тему</SelectValue>
 				</SelectTrigger>
 				<SelectContent>
 					<SelectGroup>

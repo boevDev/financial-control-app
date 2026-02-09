@@ -1,0 +1,5 @@
+export const LAYOUT_CLASSES = {
+	LAYOUT_SPACE_HORIZ: 16,
+	LAYOUT_SPACE_VERT: 8,
+	CONTAINER_BG: 'bg-slate-500/10',
+};
