@@ -4,8 +4,10 @@ import { useAuthStore } from '../../entities/auth/auth.store';
 import { useEffect } from 'react';
 import type { AuthUser } from '@finance/shared-types';
 import { Outlet, useNavigate } from '@tanstack/react-router';
+import { usePageTitle } from '../../shared/hooks/usePageTitle';
 
 export function DashboardPage() {
+	usePageTitle('Панель управления');
 	const setUser = useAuthStore((state) => state.setUser);
 	const setAccessToken = useAuthStore((state) => state.setAccessToken);
 	const logout = useAuthStore((state) => state.logout);
