@@ -6,8 +6,11 @@ export const indexRoute = createRoute({
 	getParentRoute: () => rootRoute,
 	path: '/',
 	beforeLoad: () => {
-		const isAuth = useAuthStore.getState().isAuth;
-		if (isAuth) {
+		const { isInitialized, accessToken } = useAuthStore.getState();
+		if (!isInitialized) {
+			return false;
+		}
+		if (accessToken) {
 			window.location.href = '/dashboard';
 		} else {
 			window.location.href = '/login';

@@ -10,11 +10,14 @@ export const dashboardRoute = createRoute({
 	path: '/dashboard',
 	component: DashboardPage,
 	beforeLoad: () => {
-		const isAuth = useAuthStore.getState().isAuth;
-		if (!isAuth) {
+		const accessToken = useAuthStore.getState().accessToken;
+		console.log('[dashboard.route] beforeLoad, accessToken:', !!accessToken);
+		if (!accessToken) {
+			console.log('[dashboard.route] No accessToken, redirecting to /login');
 			window.location.href = '/login';
 			return false;
 		}
+		console.log('[dashboard.route] accessToken exists, allowing access');
 		return true;
 	},
 });
