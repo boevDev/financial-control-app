@@ -1,0 +1,11 @@
+
+> @repo/db@1.0.0 generate C:\Users\ms-bo\Desktop\dev\financial-control-app\packages\db
+> prisma generate
+
+Prisma schema loaded from prisma\schema.prisma.
+
+✔ Generated Prisma Client (v7.3.0) to .\..\..\node_modules\.pnpm\@prisma+client@7.3.0_prisma_485d2206927cb3593a3877ff27d48346\node_modules\@prisma\client in 63ms
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+

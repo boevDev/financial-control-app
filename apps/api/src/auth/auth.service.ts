@@ -1,8 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { User } from '@repo/db';
 
 @Injectable()
 export class AuthService {
@@ -32,17 +32,25 @@ export class AuthService {
 	}
 
 	async generateTokens(userId: number) {
-		const accessToken = this.jwt.sign({ sub: userId }, { expiresIn: '15m' });
-		const refreshToken = this.jwt.sign({ sub: userId }, { expiresIn: '7d' });
+		try {
+			const accessToken = this.jwt.sign({ sub: userId }, { expiresIn: '15m' });
+			const refreshToken = this.jwt.sign({ sub: userId }, { expiresIn: '7d' });
 
-		const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
+			// хешируем refreshToken
+			const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
 
-		await this.prisma.user.update({
-			where: { id: userId },
-			data: { refreshToken: refreshTokenHash },
-		});
+			// обновляем пользователя
+			await this.prisma.user.update({
+				where: { id: userId },
+				data: { refreshToken: refreshTokenHash },
+			});
 
-		return { accessToken, refreshToken };
+			// возвращаем оба токена
+			return { accessToken, refreshToken };
+		} catch (err) {
+			console.error('Error in generateTokens:', err);
+			throw new Error('Failed to generate tokens');
+		}
 	}
 
 	async refreshTokens(refreshToken: string) {

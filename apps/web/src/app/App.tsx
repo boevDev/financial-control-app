@@ -1,13 +1,14 @@
-import { ThemeSwitcher, useThemeEffect } from '../features/theme';
+import { RouterProvider } from '@tanstack/react-router';
+import { router } from './router';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 function App() {
-	useThemeEffect();
-
 	return (
-		<div>
-			<h1 className="bg-white text-black dark:bg-black dark:text-white">hello world</h1>
-			<ThemeSwitcher />
-		</div>
+		<QueryClientProvider client={queryClient}>
+			<RouterProvider router={router} />
+		</QueryClientProvider>
 	);
 }
 

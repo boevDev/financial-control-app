@@ -1,1 +1,2 @@
-export { PrismaClient } from '../generated/client/index.js';
+export * from '@prisma/client';
+export { PrismaClient } from '@prisma/client';
