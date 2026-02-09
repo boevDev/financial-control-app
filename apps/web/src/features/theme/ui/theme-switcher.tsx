@@ -10,10 +10,29 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/shared/ui/select';
+import { MoonIcon, SunIcon, SunMoonIcon } from 'lucide-react';
 
 interface ThemeSwitcherProps {
 	className?: string;
 }
+
+const themes = [
+	{
+		value: 'light',
+		icon: <SunIcon />,
+		text: 'Светлая',
+	},
+	{
+		value: 'dark',
+		icon: <MoonIcon />,
+		text: 'Тёмная',
+	},
+	{
+		value: 'system',
+		icon: <SunMoonIcon />,
+		text: 'Системная',
+	},
+];
 
 export const ThemeSwitcher: FC<ThemeSwitcherProps> = ({ className }) => {
 	const theme = useThemeStore((s) => s.theme);
@@ -22,15 +41,17 @@ export const ThemeSwitcher: FC<ThemeSwitcherProps> = ({ className }) => {
 	return (
 		<div className={cn(className)}>
 			<Select value={theme} onValueChange={(value) => setTheme(value as Theme)}>
-				<SelectTrigger className="w-full max-w-48">
+				<SelectTrigger>
 					<SelectValue placeholder="Выбрать тему" />
 				</SelectTrigger>
 				<SelectContent>
 					<SelectGroup>
 						<SelectLabel>Тема</SelectLabel>
-						<SelectItem value="light">Светлая</SelectItem>
-						<SelectItem value="dark">Тёмная</SelectItem>
-						<SelectItem value="system">Системная</SelectItem>
+						{themes.map((theme) => (
+							<SelectItem value={theme.value}>
+								{theme.icon} {theme.text}
+							</SelectItem>
+						))}
 					</SelectGroup>
 				</SelectContent>
 			</Select>
