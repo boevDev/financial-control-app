@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { useAuthStore } from '../entities/auth/auth.store';
 import { authApi } from '../entities/auth/auth.api';
 import { useThemeEffect } from '../features/theme';
-import { useThemeStore } from '../features/theme/model/themeStore';
+import { useThemeStore } from '../features/theme/model/store';
 
 const queryClient = new QueryClient();
 
@@ -14,10 +14,8 @@ function App() {
 
 	useEffect(() => {
 		const initialize = async () => {
-			// Инициализируем тему из localStorage
 			useThemeStore.getState().initializeTheme();
 
-			// Инициализируем auth из localStorage
 			const initializeAuth = useAuthStore.getState().initializeAuth;
 			initializeAuth();
 
