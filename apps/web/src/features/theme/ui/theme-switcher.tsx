@@ -50,7 +50,7 @@ export const ThemeSwitcher: FC<ThemeSwitcherProps> = ({ className }) => {
 					<SelectGroup>
 						<SelectLabel>Тема</SelectLabel>
 						{themes.map((theme) => (
-							<SelectItem value={theme.value}>
+							<SelectItem key={theme.value} value={theme.value}>
 								{theme.icon} {theme.text}
 							</SelectItem>
 						))}
