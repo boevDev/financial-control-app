@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { authApi } from '../../entities/auth/auth.api';
 import { useAuthStore } from '../../entities/auth/auth.store';
-import { useEffect } from 'react';
 import type { AuthUser } from '@finance/shared-types';
 import { Outlet, useNavigate } from '@tanstack/react-router';
 import { usePageTitle } from '../../shared/hooks/usePageTitle';
@@ -12,7 +11,6 @@ import { usePageTitleStore } from '@/shared/hooks/pageTitle.store';
 
 export function DashboardPage() {
 	usePageTitle('Панель управления');
-	const setUser = useAuthStore((state) => state.setUser);
 	const setAccessToken = useAuthStore((state) => state.setAccessToken);
 	const logout = useAuthStore((state) => state.logout);
 	const navigate = useNavigate();
@@ -32,10 +30,6 @@ export function DashboardPage() {
 		retry: false,
 	});
 
-	useEffect(() => {
-		if (meQuery.data) setUser(meQuery.data);
-	}, [meQuery.data, setUser]);
-
 	const handleLogout = () => {
 		logout();
 		navigate({ to: '/login' });
@@ -50,12 +44,9 @@ export function DashboardPage() {
 				<div>
 					<h1>{currentPageTitle}</h1>
 				</div>
-
 				<div className="flex gap-4">
 					<ThemeSwitcher />
-					<Button onClick={handleLogout} style={{ padding: '10px 20px' }}>
-						Выйти из аккаунта
-					</Button>
+					<Button onClick={handleLogout}>Выйти из аккаунта</Button>
 				</div>
 			</Header>
 			<Outlet />

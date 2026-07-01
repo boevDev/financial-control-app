@@ -13,7 +13,6 @@ import { getAuthErrorMessage } from '@/shared/lib/get-auth-error-message';
 
 export function RegisterPage() {
 	usePageTitle('Регистрация');
-	const setUser = useAuthStore((state) => state.setUser);
 	const setAccessToken = useAuthStore((state) => state.setAccessToken);
 	const navigate = useNavigate();
 	const [submitError, setSubmitError] = useState<string | null>(null);
@@ -30,15 +29,9 @@ export function RegisterPage() {
 		onSubmit: async ({ value }) => {
 			try {
 				const data = await authApi.register(value.email, value.password);
-
-				if (!data?.accessToken) {
-					throw new Error('No access token returned from register');
-				}
+				if (!data?.accessToken) throw new Error('No access token');
 
 				setAccessToken(data.accessToken);
-
-				const user = await authApi.me();
-				setUser(user);
 				navigate({ to: '/dashboard' });
 			} catch (error: unknown) {
 				setSubmitError(getAuthErrorMessage(error));

@@ -13,7 +13,6 @@ import { getAuthErrorMessage } from '@/shared/lib/get-auth-error-message';
 
 export function LoginPage() {
 	usePageTitle('Авторизация');
-	const setUser = useAuthStore((state) => state.setUser);
 	const setAccessToken = useAuthStore((state) => state.setAccessToken);
 	const navigate = useNavigate();
 	const [submitError, setSubmitError] = useState<string | null>(null);
@@ -30,9 +29,6 @@ export function LoginPage() {
 			try {
 				const data = await authApi.login(value.email, value.password);
 				setAccessToken(data.accessToken);
-
-				const user = await authApi.me();
-				setUser(user);
 				navigate({ to: '/dashboard' });
 			} catch (error: unknown) {
 				setSubmitError(getAuthErrorMessage(error));
