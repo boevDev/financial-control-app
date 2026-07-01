@@ -1,5 +1,5 @@
 import type { AuthResponse, AuthUser } from '@finance/shared-types';
-import { api } from '../../shared/lib/api';
+import { api } from '@/shared/lib/api';
 
 export const authApi = {
 	register: (email: string, password: string) =>

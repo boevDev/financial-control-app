@@ -1,16 +1,12 @@
 import { createRoute, redirect } from '@tanstack/react-router';
-import { useAuthStore } from '../../entities/auth/auth.store';
+import { useAuthStore } from '@/entities/auth';
 import { rootRoute } from '../router';
 
 export const indexRoute = createRoute({
 	getParentRoute: () => rootRoute,
 	path: '/',
 	beforeLoad: () => {
-		const { isInitialized, accessToken } = useAuthStore.getState();
-
-		if (!isInitialized) {
-			return;
-		}
+		const { accessToken } = useAuthStore.getState();
 
 		if (accessToken) {
 			throw redirect({

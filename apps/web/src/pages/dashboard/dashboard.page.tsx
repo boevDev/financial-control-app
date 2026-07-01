@@ -1,33 +1,26 @@
 import { useQuery } from '@tanstack/react-query';
-import { authApi } from '../../entities/auth/auth.api';
-import { useAuthStore } from '../../entities/auth/auth.store';
-import type { AuthUser } from '@finance/shared-types';
+import { useAuthStore } from '@/entities/auth';
 import { Outlet, useNavigate } from '@tanstack/react-router';
 import { usePageTitle } from '../../shared/hooks/usePageTitle';
 import { Button } from '@/shared/ui/button';
 import Header from '@/shared/ui/layout/header';
 import { ThemeSwitcher } from '@/features/theme';
 import { usePageTitleStore } from '@/shared/hooks/pageTitle.store';
+import { authApi } from '@/entities/auth';
 
 export function DashboardPage() {
 	usePageTitle('Панель управления');
-	const setAccessToken = useAuthStore((state) => state.setAccessToken);
 	const logout = useAuthStore((state) => state.logout);
 	const navigate = useNavigate();
 	const { currentPageTitle } = usePageTitleStore();
 
-	const meQuery = useQuery<AuthUser, Error>({
+	const {
+		data: user,
+		isLoading,
+		isError,
+	} = useQuery({
 		queryKey: ['me'],
-		queryFn: async () => {
-			try {
-				return await authApi.me();
-			} catch {
-				const data = await authApi.refresh();
-				setAccessToken(data.accessToken);
-				return await authApi.me();
-			}
-		},
-		retry: false,
+		queryFn: () => authApi.me(),
 	});
 
 	const handleLogout = () => {
@@ -35,18 +28,22 @@ export function DashboardPage() {
 		navigate({ to: '/login' });
 	};
 
-	if (meQuery.isLoading) return <div>Loading...</div>;
-	if (meQuery.isError) return <div>Error: {meQuery.error.message}</div>;
+	if (isLoading) return <div>Loading...</div>;
+	if (isError) return <div>Error loading profile</div>;
 
 	return (
 		<div>
 			<Header>
 				<div>
 					<h1>{currentPageTitle}</h1>
+					<p className="text-sm text-muted-foreground">Привет, {user?.email}</p>
 				</div>
+
 				<div className="flex gap-4">
 					<ThemeSwitcher />
-					<Button onClick={handleLogout}>Выйти из аккаунта</Button>
+					<Button onClick={handleLogout} variant="outline">
+						Выйти
+					</Button>
 				</div>
 			</Header>
 			<Outlet />

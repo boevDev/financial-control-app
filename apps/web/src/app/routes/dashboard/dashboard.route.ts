@@ -1,7 +1,7 @@
 import { createRoute, redirect } from '@tanstack/react-router';
 import { rootRoute } from '../../router';
 import { DashboardPage } from '../../../pages/dashboard/dashboard.page';
-import { useAuthStore } from '../../../entities/auth/auth.store';
+import { useAuthStore } from '@/entities/auth';
 import { profileRoute } from './profile.route';
 import { settingsRoute } from './settings.route';
 

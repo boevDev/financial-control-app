@@ -1,7 +1,7 @@
 import { createRoute, redirect } from '@tanstack/react-router';
 import { rootRoute } from '../router';
 import { RegisterPage } from '../../pages/register/register.page';
-import { useAuthStore } from '../../entities/auth/auth.store';
+import { useAuthStore } from '@/entities/auth';
 
 export const registerRoute = createRoute({
 	getParentRoute: () => rootRoute,

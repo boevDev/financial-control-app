@@ -1,6 +1,5 @@
 import { useForm } from '@tanstack/react-form';
-import { useAuthStore } from '../../entities/auth/auth.store';
-import { authApi } from '../../entities/auth/auth.api';
+import { useAuthStore } from '@/entities/auth';
 import { useNavigate } from '@tanstack/react-router';
 import { usePageTitle } from '../../shared/hooks/usePageTitle';
 import { Input } from '@/shared/ui/input';
@@ -10,6 +9,7 @@ import { loginFormSchema } from '@/shared/lib/form-schemas';
 import { useState } from 'react';
 import { ErrorMessage } from '@/shared/ui/error-message';
 import { getAuthErrorMessage } from '@/shared/lib/get-auth-error-message';
+import { authApi } from '@/entities/auth';
 
 export function LoginPage() {
 	usePageTitle('Авторизация');
