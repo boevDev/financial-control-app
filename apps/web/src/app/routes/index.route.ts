@@ -1,4 +1,4 @@
-import { createRoute } from '@tanstack/react-router';
+import { createRoute, redirect } from '@tanstack/react-router';
 import { useAuthStore } from '../../entities/auth/auth.store';
 import { rootRoute } from '../router';
 
@@ -7,14 +7,21 @@ export const indexRoute = createRoute({
 	path: '/',
 	beforeLoad: () => {
 		const { isInitialized, accessToken } = useAuthStore.getState();
+
 		if (!isInitialized) {
-			return false;
+			return;
 		}
+
 		if (accessToken) {
-			window.location.href = '/dashboard';
+			throw redirect({
+				to: '/dashboard',
+				replace: true,
+			});
 		} else {
-			window.location.href = '/login';
+			throw redirect({
+				to: '/login',
+				replace: true,
+			});
 		}
-		return false;
 	},
 });

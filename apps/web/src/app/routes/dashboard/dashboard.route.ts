@@ -1,4 +1,4 @@
-import { createRoute } from '@tanstack/react-router';
+import { createRoute, redirect } from '@tanstack/react-router';
 import { rootRoute } from '../../router';
 import { DashboardPage } from '../../../pages/dashboard/dashboard.page';
 import { useAuthStore } from '../../../entities/auth/auth.store';
@@ -11,14 +11,12 @@ export const dashboardRoute = createRoute({
 	component: DashboardPage,
 	beforeLoad: () => {
 		const accessToken = useAuthStore.getState().accessToken;
-		console.log('[dashboard.route] beforeLoad, accessToken:', !!accessToken);
 		if (!accessToken) {
-			console.log('[dashboard.route] No accessToken, redirecting to /login');
-			window.location.href = '/login';
-			return false;
+			throw redirect({
+				to: '/login',
+				replace: true,
+			});
 		}
-		console.log('[dashboard.route] accessToken exists, allowing access');
-		return true;
 	},
 });
 
