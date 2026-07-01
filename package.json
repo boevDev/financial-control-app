@@ -19,5 +19,15 @@
 		"prettier": "^3.8.1",
 		"turbo": "^2.8.3",
 		"typescript": "^5.2.2"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"@nestjs/core",
+			"@prisma/engines",
+			"@swc/core",
+			"bcrypt",
+			"esbuild",
+			"prisma"
+		]
 	}
 }

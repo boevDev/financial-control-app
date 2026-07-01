@@ -2,11 +2,10 @@ import axios from 'axios';
 import { useAuthStore } from '../../entities/auth/auth.store';
 
 export const api = axios.create({
-	baseURL: 'http://localhost:3000',
+	baseURL: import.meta.env.VITE_API_URL,
 	withCredentials: true,
 });
 
-// Добавляем accessToken в каждый запрос
 api.interceptors.request.use((config) => {
 	const accessToken = useAuthStore.getState().accessToken;
 	if (accessToken) {
